@@ -1,0 +1,24 @@
+// Quick test for FnCallParamType and ErroneousReturnType
+
+function int add(int a, int b) {
+    return a + b;
+}
+
+// Test FnCallParamType
+function int test_param_type() {
+    bool flag = true;
+    int r1 = add(flag, flag);  // Should error: bool passed to int params
+    return r1;
+}
+
+// Test ErroneousReturnType  
+function int test_return_type() {
+    bool result = true;
+    return result;  // Should error: returning bool from int function
+}
+
+function int main() {
+    int r1 = test_param_type();
+    int r2 = test_return_type();
+    return 0;
+}

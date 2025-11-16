@@ -1,0 +1,11 @@
+// Test ERROR 4: ErroneousReturnType only
+
+function int test_error_4() {
+    bool result = true;
+    return result;  // Returning bool from int function
+}
+
+function int main() {
+    int r4 = test_error_4();
+    return 0;
+}

@@ -1,0 +1,12 @@
+// Test ERROR 12: AttemptedShiftOnNonInt
+
+function int test_error_12() {
+    float x = 3.14;
+    int result = x << 2;  // Shift on float
+    return result;
+}
+
+function int main() {
+    int r12 = test_error_12();
+    return 0;
+}

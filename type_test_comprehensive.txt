@@ -1,0 +1,86 @@
+// COMPREHENSIVE TYPE CHECKING TEST
+// This file tests multiple type checking error types
+
+// Global variables
+int globalInt = 100;
+float globalFloat = 3.14;
+
+// Test 1: FnCallParamCount - Wrong number of parameters
+function int add(int a, int b) {
+    return a + b;
+}
+
+// Test 2: ErroneousVarDecl - Type mismatch in variable declaration
+function int test2() {
+    int x = 5;
+    int y = 10;
+    int result1 = x && y;  // Error: bool assigned to int
+    int result2 = x || y;  // Error: bool assigned to int
+    int result3 = !x;      // Error: bool assigned to int
+    return result1;
+}
+
+// Test 3: AssignMismatch - Type mismatch in assignment
+function int test3() {
+    int x = 5;
+    float y = 3.14;
+    x = y;  // May cause issues depending on strictness
+    return x;
+}
+
+// Test 4: BinaryOpMismatch - Incompatible types in binary operation
+function int test4() {
+    int x = 5;
+    float y = 3.14;
+    bool flag = true;
+    int result = x + flag;  // Error: int + bool
+    return result;
+}
+
+// Test 5: ReturnTypeMismatch - Wrong return type
+function int test5() {
+    float result = 3.14;
+    return result;  // Error: returning float from int function
+}
+
+// Test 6: CondExprMustBeBool - Non-boolean condition
+function int test6() {
+    int x = 5;
+    if (x) {  // Error: int used as condition (should be bool)
+        return 1;
+    }
+    return 0;
+}
+
+// Test 7: AttemptedIndexOnNonIndexable - Array indexing on non-array
+function int test7() {
+    int x = 5;
+    int result = x[0];  // Error: trying to index a non-array
+    return result;
+}
+
+function int main() {
+    // Test 1: FnCallParamCount
+    int r1 = add(5);  // Error: expects 2 params, got 1
+    int r2 = add(5, 10, 15);  // Error: expects 2 params, got 3
+    
+    // Test 2: ErroneousVarDecl
+    int r3 = test2();
+    
+    // Test 3: AssignMismatch
+    int r4 = test3();
+    
+    // Test 4: BinaryOpMismatch
+    int r5 = test4();
+    
+    // Test 5: ReturnTypeMismatch
+    int r6 = test5();
+    
+    // Test 6: CondExprMustBeBool
+    int r7 = test6();
+    
+    // Test 7: AttemptedIndexOnNonIndexable (if supported)
+    // int r8 = test7();
+    
+    return 0;
+}

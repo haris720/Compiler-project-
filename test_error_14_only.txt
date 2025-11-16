@@ -1,0 +1,12 @@
+// Test ERROR 14: AttemptedExponentiationOfNonNumeric
+
+function int test_error_14() {
+    bool flag = true;
+    int result = flag ** 2;  // Exponentiation on bool
+    return result;
+}
+
+function int main() {
+    int r14 = test_error_14();
+    return 0;
+}

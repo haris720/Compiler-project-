@@ -1,0 +1,167 @@
+// Comprehensive Type Checking Test - All 15 Error Types
+// This file intentionally contains all 15 type checking errors
+
+// Global variables
+int globalInt = 100;
+float globalFloat = 3.14;
+bool globalBool = true;
+
+// Helper function for testing
+function int add(int a, int b) {
+    return a + b;
+}
+
+function int subtract(int a, int b) {
+    return a - b;
+}
+
+// ERROR 1: ErroneousVarDecl
+// Variable declared as one type but initialized with incompatible type
+function int test_error_1() {
+    int x = 5;
+    int y = 10;
+    int result = x && y;  // bool assigned to int
+    return result;
+}
+
+// ERROR 2: FnCallParamCount
+// Wrong number of parameters in function call
+function int test_error_2() {
+    int r1 = add(5);  // Expects 2, provided 1
+    return r1;
+}
+
+// ERROR 3: FnCallParamType
+// Wrong parameter type in function call (may not trigger if permissive)
+function int test_error_3() {
+    bool flag = true;
+    int r1 = add(flag, flag);  // Expects int, provided bool (both params)
+    return r1;
+}
+
+// ERROR 4: ErroneousReturnType
+// Return type doesn't match function signature
+function int test_error_4() {
+    bool result = true;
+    return result;  // Returning bool from int function
+}
+
+// ERROR 5: ExpressionTypeMismatch
+// Ternary operator with mismatched types
+function int test_error_5() {
+    bool condition = true;
+    int x = 5;
+    bool y = false;
+    int result = condition ? x : y;  // int and bool mismatch
+    return result;
+}
+
+// ERROR 6: ExpectedBooleanExpression
+// Ternary condition must be boolean
+function int test_error_6() {
+    int x = 5;
+    int result = x ? 10 : 20;  // int used as condition
+    return result;
+}
+
+// ERROR 7: ErroneousBreak
+// Break statement outside of loop
+function int test_error_7() {
+    int x = 5;
+    if (x > 3) {
+        break;  // Break outside loop
+    }
+    return x;
+}
+
+// ERROR 8: NonBooleanCondStmt
+// Non-boolean condition in while statement
+function int test_error_8() {
+    int x = 5;
+    while (x) {  // int used as condition (may be allowed)
+        x = x - 1;
+        if (x < 1) {
+            break;
+        }
+    }
+    return x;
+}
+
+// ERROR 9: EmptyExpression - Skip (causes parse error)
+// This would require parser changes to detect
+function int test_error_9() {
+    int x = 0;
+    return x;
+}
+
+// ERROR 10: AttemptedBoolOpOnNonBools
+// Boolean operators (&&, ||) on non-boolean types
+function int test_error_10() {
+    int x = 5;
+    int y = 10;
+    int result = x || y;  // || on integers
+    return result;
+}
+
+// ERROR 11: AttemptedBitOpOnNonNumeric
+// Bitwise operators on non-numeric types
+function int test_error_11() {
+    bool flag1 = true;
+    bool flag2 = false;
+    int result = flag1 & flag2;  // Bitwise & on booleans
+    return result;
+}
+
+// ERROR 12: AttemptedShiftOnNonInt
+// Shift operators on non-integer types
+function int test_error_12() {
+    float x = 3.14;
+    int result = x << 2;  // Shift on float
+    return result;
+}
+
+// ERROR 13: AttemptedAddOpOnNonNumeric
+// Addition/subtraction on non-numeric types
+function int test_error_13() {
+    bool flag = true;
+    int x = 5;
+    int result = flag + x;  // Adding bool and int
+    return result;
+}
+
+// ERROR 14: AttemptedExponentiationOfNonNumeric
+// Exponentiation on non-numeric types
+function int test_error_14() {
+    bool flag = true;
+    int result = flag ** 2;  // Exponentiation on bool
+    return result;
+}
+
+// ERROR 15: ReturnStmtNotFound
+// Non-void function without return statement
+function int test_error_15() {
+    int x = 5;
+    int y = 10;
+    // Missing return statement
+}
+
+// Main function to call all test functions
+function int main() {
+    int r1 = test_error_1();
+    int r2 = test_error_2();
+    int r3 = test_error_3();
+    int r4 = test_error_4();
+    int r5 = test_error_5();
+    int r6 = test_error_6();
+    int r7 = test_error_7();
+    int r8 = test_error_8();
+    // Skipping test_error_9 due to parsing issues
+    int r10 = test_error_10();
+    int r11 = test_error_11();
+    int r12 = test_error_12();
+    int r13 = test_error_13();
+    int r14 = test_error_14();
+    int r15 = test_error_15();
+    
+    return 0;
+}

@@ -1,0 +1,38 @@
+// COMPREHENSIVE SCOPE ANALYSIS TEST
+// This file tests all 4 scope error types
+
+// Test 1: UndeclaredVariableAccessed
+function int test1() {
+    int result = undeclaredVar;  // Error: undeclaredVar not declared
+    return result;
+}
+
+// Test 2: UndefinedFunctionCalled
+function int test2() {
+    int x = undefinedFunction();  // Error: undefinedFunction not defined
+    return x;
+}
+
+// Test 3: VariableRedefinition
+function int test3() {
+    int a = 5;
+    int a = 10;  // Error: variable 'a' redefined
+    return a;
+}
+
+// Test 4: FunctionPrototypeRedefinition
+function int duplicate() {
+    return 1;
+}
+
+function int duplicate() {  // Error: function 'duplicate' redefined
+    return 2;
+}
+
+function int main() {
+    int r1 = test1();
+    int r2 = test2();
+    int r3 = test3();
+    int r4 = duplicate();
+    return 0;
+}

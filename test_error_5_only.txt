@@ -1,0 +1,14 @@
+// Test ERROR 5: ExpressionTypeMismatch - Ternary operator
+
+function int test_error_5() {
+    bool condition = true;
+    int x = 5;
+    bool y = false;
+    int result = condition ? x : y;  // int and bool mismatch
+    return result;
+}
+
+function int main() {
+    int r5 = test_error_5();
+    return 0;
+}
