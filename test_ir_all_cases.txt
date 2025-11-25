@@ -1,0 +1,130 @@
+// Final validation - All implemented IR cases
+
+// Test 1: Arithmetic operations
+function int testArithmetic() {
+    int a = 10;
+    int b = 3;
+    int add = a + b;      // ADD
+    int sub = a - b;      // SUB
+    int mul = a * b;      // MUL
+    int div = a / b;      // DIV
+    int mod = a % b;      // MOD
+    return add + sub + mul + div + mod;
+}
+
+// Test 2: Comparison operations
+function bool testComparison() {
+    int x = 5;
+    int y = 10;
+    bool eq = (x == y);   // EQ
+    bool neq = (x != y);  // NEQ
+    bool lt = (x < y);    // LT
+    bool le = (x <= y);   // LE
+    bool gt = (x > y);    // GT
+    bool ge = (x >= y);   // GE
+    return lt && le;
+}
+
+// Test 3: Logical operations
+function bool testLogical() {
+    bool a = true;
+    bool b = false;
+    bool andOp = a && b;  // AND
+    bool orOp = a || b;   // OR
+    bool notOp = !a;      // NOT
+    return andOp || orOp;
+}
+
+// Test 4: Bitwise operations
+function int testBitwise() {
+    int a = 12;
+    int b = 10;
+    int andBit = a & b;      // BIT_AND
+    int orBit = a | b;       // BIT_OR
+    int xorBit = a ^ b;      // BIT_XOR
+    int lshift = a << 2;     // LEFT_SHIFT
+    int rshift = a >> 1;     // RIGHT_SHIFT
+    int notBit = ~a;         // BIT_NOT
+    return andBit + orBit;
+}
+
+// Test 5: Unary operations
+function int testUnary() {
+    int x = 10;
+    int neg = -x;         // NEG
+    bool flag = true;
+    bool notFlag = !flag; // NOT
+    int bitNot = ~x;      // BIT_NOT
+    return neg + bitNot;
+}
+
+// Test 6: Control flow - if/else
+function int testIfElse(int n) {
+    if (n > 0) {          // IF_FALSE, GOTO
+        return 1;         // RETURN
+    } else {
+        return -1;        // RETURN
+    }
+}
+
+// Test 7: While loop with break/continue
+function int testWhile() {
+    int i = 0;
+    int sum = 0;
+    while (i < 10) {      // IF_FALSE, GOTO
+        i = i + 1;
+        if (i == 5) {
+            continue;     // GOTO (loop start)
+        }
+        if (i == 8) {
+            break;        // GOTO (loop end)
+        }
+        sum = sum + i;
+    }
+    return sum;
+}
+
+// Test 8: For loop
+function int testFor() {
+    int sum = 0;
+    for (int i = 1; i <= 5; i = i + 1) {  // IF_FALSE, GOTO
+        sum = sum + i;
+    }
+    return sum;
+}
+
+// Test 9: Ternary operator
+function int testTernary(int a, int b) {
+    int max = (a > b) ? a : b;  // IF_FALSE, GOTO, ASSIGN
+    int min = (a < b) ? a : b;  // IF_FALSE, GOTO, ASSIGN
+    return max - min;
+}
+
+// Test 10: Function calls with parameters
+function int add(int a, int b) {
+    return a + b;
+}
+
+function int main() {
+    // Test all operations
+    int arith = testArithmetic();     // PARAM, CALL
+    bool comp = testComparison();     // PARAM, CALL
+    bool logic = testLogical();       // PARAM, CALL
+    int bitw = testBitwise();         // PARAM, CALL
+    int unary = testUnary();          // PARAM, CALL
+    int ifelse = testIfElse(10);      // PARAM, CALL
+    int whileTest = testWhile();      // PARAM, CALL
+    int forTest = testFor();          // PARAM, CALL
+    int ternary = testTernary(5, 3);  // PARAM, CALL
+    
+    // Assignment
+    int result = arith + bitw;        // ASSIGN
+    
+    // Print
+    print result;                     // PRINT
+    print whileTest;
+    print forTest;
+    
+    // Return
+    return 0;                         // RETURN
+}

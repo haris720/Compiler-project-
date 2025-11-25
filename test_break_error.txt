@@ -1,0 +1,6 @@
+// Test: Break outside loop - should FAIL scope analysis
+int main() {
+    int x = 10;
+    break;  // Error: break outside loop
+    return 0;
+}

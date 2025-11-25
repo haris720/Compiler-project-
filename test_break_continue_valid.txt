@@ -1,0 +1,22 @@
+// Comprehensive test for break/continue validation
+
+int main() {
+    // Valid: break in while loop
+    int i = 0;
+    while (i < 5) {
+        if (i == 3) {
+            break;  // Valid
+        }
+        i = i + 1;
+    }
+    
+    // Valid: continue in for loop
+    for (int j = 0; j < 10; j = j + 1) {
+        if (j == 5) {
+            continue;  // Valid
+        }
+        print j;
+    }
+    
+    return 0;
+}

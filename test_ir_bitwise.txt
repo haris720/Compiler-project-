@@ -1,0 +1,32 @@
+// Test all bitwise operations
+int main() {
+    int a = 12;  // 1100 in binary
+    int b = 10;  // 1010 in binary
+    
+    // Bitwise AND: 1000 = 8
+    int andResult = a & b;
+    
+    // Bitwise OR: 1110 = 14
+    int orResult = a | b;
+    
+    // Bitwise XOR: 0110 = 6
+    int xorResult = a ^ b;
+    
+    // Left shift: 1100 << 2 = 110000 = 48
+    int leftShift = a << 2;
+    
+    // Right shift: 1100 >> 2 = 0011 = 3
+    int rightShift = a >> 2;
+    
+    // Bitwise NOT: ~12 = -13 (two's complement)
+    int notResult = ~a;
+    
+    print andResult;
+    print orResult;
+    print xorResult;
+    print leftShift;
+    print rightShift;
+    print notResult;
+    
+    return 0;
+}

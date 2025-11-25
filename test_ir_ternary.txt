@@ -1,0 +1,21 @@
+// Test nested ternary operators
+int main() {
+    int x = 15;
+    int y = 20;
+    int z = 10;
+    
+    // Simple ternary
+    int max = (x > y) ? x : y;
+    
+    // Nested ternary - find maximum of three numbers
+    int maxOfThree = (x > y) ? ((x > z) ? x : z) : ((y > z) ? y : z);
+    
+    // Chained ternary
+    int category = (x < 10) ? 1 : ((x < 20) ? 2 : 3);
+    
+    print max;
+    print maxOfThree;
+    print category;
+    
+    return 0;
+}

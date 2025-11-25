@@ -1,0 +1,11 @@
+// Test do-while loop
+int main() {
+    int i = 0;
+    
+    do {
+        print i;
+        i = i + 1;
+    } while (i < 5);
+    
+    return 0;
+}

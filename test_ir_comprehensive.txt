@@ -1,0 +1,143 @@
+// Comprehensive IR test - All language constructs
+
+int globalX = 100;
+int globalY = 200;
+
+function int add(int a, int b) {
+    return a + b;
+}
+
+function int multiply(int a, int b) {
+    return a * b;
+}
+
+function int fibonacci(int n) {
+    if (n <= 1) {
+        return n;
+    } else {
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+}
+
+int main() {
+    // 1. Variable declarations with initialization
+    int x = 10;
+    int y = 20;
+    float f = 3.14;
+    bool flag = true;
+    
+    // 2. Binary operations (arithmetic)
+    int sum = x + y;
+    int diff = x - y;
+    int prod = x * y;
+    int quot = y / x;
+    int mod = y % x;
+    
+    // 3. Binary operations (comparison)
+    bool eq = (x == y);
+    bool neq = (x != y);
+    bool lt = (x < y);
+    bool le = (x <= y);
+    bool gt = (x > y);
+    bool ge = (x >= y);
+    
+    // 4. Binary operations (logical)
+    bool andOp = (flag && eq);
+    bool orOp = (flag || eq);
+    
+    // 5. Binary operations (bitwise)
+    int bitAnd = x & y;
+    int bitOr = x | y;
+    int bitXor = x ^ y;
+    int leftShift = x << 2;
+    int rightShift = y >> 1;
+    
+    // 6. Unary operations
+    int negation = -x;
+    bool notOp = !flag;
+    int bitNot = ~x;
+    
+    // 7. Ternary operator
+    int max = (x > y) ? x : y;
+    int min = (x < y) ? x : y;
+    
+    // 8. Function calls
+    int result1 = add(x, y);
+    int result2 = multiply(x, y);
+    int fib5 = fibonacci(5);
+    
+    // 9. Assignments
+    x = 100;
+    y = x + 50;
+    
+    // 10. If-else statements
+    if (x > 50) {
+        print 1;
+    } else {
+        print 0;
+    }
+    
+    // 11. Nested if-else
+    if (x > 100) {
+        print 2;
+    } else {
+        if (x > 50) {
+            print 1;
+        } else {
+            print 0;
+        }
+    }
+    
+    // 12. While loop
+    int i = 0;
+    while (i < 5) {
+        print i;
+        i = i + 1;
+    }
+    
+    // 13. For loop
+    for (int j = 0; j < 3; j = j + 1) {
+        print j;
+    }
+    
+    // 14. Break statement
+    int k = 0;
+    while (k < 10) {
+        if (k == 5) {
+            break;
+        }
+        k = k + 1;
+    }
+    
+    // 15. Continue statement
+    int m = 0;
+    while (m < 10) {
+        m = m + 1;
+        if (m == 5) {
+            continue;
+        }
+        print m;
+    }
+    
+    // 16. Nested loops
+    for (int a = 0; a < 2; a = a + 1) {
+        for (int b = 0; b < 2; b = b + 1) {
+            print a + b;
+        }
+    }
+    
+    // 17. Complex expressions
+    int complex = (x + y) * (x - y) / 2;
+    int nested = ((x * 2) + (y * 3)) - ((x / 2) + (y / 3));
+    
+    // 18. Global variable access
+    int gSum = globalX + globalY;
+    
+    // 19. Print statements
+    print result1;
+    print result2;
+    print fib5;
+    
+    // 20. Return statement
+    return 0;
+}

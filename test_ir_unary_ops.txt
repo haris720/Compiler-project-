@@ -1,0 +1,20 @@
+// Test all unary operations
+int main() {
+    int x = 10;
+    bool flag = true;
+    
+    // Unary minus (negation)
+    int neg = -x;
+    
+    // Logical NOT
+    bool notFlag = !flag;
+    
+    // Bitwise NOT
+    int bitNot = ~x;
+    
+    print neg;
+    print notFlag;
+    print bitNot;
+    
+    return 0;
+}

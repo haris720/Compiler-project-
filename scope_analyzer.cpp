@@ -128,12 +128,12 @@ void ScopeAnalyzer::analyzeStatement(const std::shared_ptr<StatementNode>& state
     else if (auto printStmt = std::dynamic_pointer_cast<PrintStatementNode>(statement)) {
         analyzePrintStatement(printStmt);
     }
-    // Break/Continue statements (no scope checking needed)
+    // Break/Continue statements (validate they're inside loops)
     else if (auto breakStmt = std::dynamic_pointer_cast<BreakStatementNode>(statement)) {
-        // No scope checking needed
+        analyzeBreakStatement(breakStmt);
     }
     else if (auto continueStmt = std::dynamic_pointer_cast<ContinueStatementNode>(statement)) {
-        // No scope checking needed
+        analyzeContinueStatement(continueStmt);
     }
 }
 
@@ -227,10 +227,16 @@ void ScopeAnalyzer::analyzeWhileStatement(const std::shared_ptr<WhileStatementNo
     // Analyze condition
     analyzeExpression(whileStmt->condition);
     
+    // Enter loop context
+    loopDepth++;
+    
     // Analyze body (creates new scope)
     if (whileStmt->body) {
         analyzeBlock(whileStmt->body);
     }
+    
+    // Exit loop context
+    loopDepth--;
 }
 
 // For Statement
@@ -253,6 +259,9 @@ void ScopeAnalyzer::analyzeForStatement(const std::shared_ptr<ForStatementNode>&
         analyzeStatement(forStmt->update);
     }
     
+    // Enter loop context
+    loopDepth++;
+    
     // Analyze body (but don't create another scope - for already created one)
     if (forStmt->body) {
         for (const auto& stmt : forStmt->body->statements) {
@@ -260,15 +269,24 @@ void ScopeAnalyzer::analyzeForStatement(const std::shared_ptr<ForStatementNode>&
         }
     }
     
+    // Exit loop context
+    loopDepth--;
+    
     exitScope();
 }
 
 // Do-While Statement
 void ScopeAnalyzer::analyzeDoWhileStatement(const std::shared_ptr<DoWhileStatementNode>& doWhileStmt) {
+    // Enter loop context
+    loopDepth++;
+    
     // Analyze body (creates new scope)
     if (doWhileStmt->body) {
         analyzeBlock(doWhileStmt->body);
     }
+    
+    // Exit loop context
+    loopDepth--;
     
     // Analyze condition
     analyzeExpression(doWhileStmt->condition);
@@ -281,6 +299,9 @@ void ScopeAnalyzer::analyzeSwitchStatement(const std::shared_ptr<SwitchStatement
     
     // Switch creates its own scope
     enterScope();
+    
+    // Enter switch context (break is valid in switch)
+    switchDepth++;
     
     // Analyze each case
     for (const auto& caseStmt : switchStmt->cases) {
@@ -299,6 +320,9 @@ void ScopeAnalyzer::analyzeSwitchStatement(const std::shared_ptr<SwitchStatement
             analyzeStatement(stmt);
         }
     }
+    
+    // Exit switch context
+    switchDepth--;
     
     exitScope();
 }
@@ -358,4 +382,21 @@ void ScopeAnalyzer::analyzeTernary(const std::shared_ptr<TernaryNode>& ternary) 
     analyzeExpression(ternary->condition);
     analyzeExpression(ternary->trueValue);
     analyzeExpression(ternary->falseValue);
+}
+
+// Break Statement
+void ScopeAnalyzer::analyzeBreakStatement(const std::shared_ptr<BreakStatementNode>& breakStmt) {
+    // Break is valid in loops or switch statements
+    if (loopDepth == 0 && switchDepth == 0) {
+        reportError(ScopeError::ErroneousBreakOrContinue,
+                   "Break statement outside loop or switch");
+    }
+}
+
+// Continue Statement
+void ScopeAnalyzer::analyzeContinueStatement(const std::shared_ptr<ContinueStatementNode>& continueStmt) {
+    if (loopDepth == 0) {
+        reportError(ScopeError::ErroneousBreakOrContinue,
+                   "Continue statement outside loop");
+    }
 }

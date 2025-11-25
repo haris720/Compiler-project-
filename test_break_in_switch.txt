@@ -1,0 +1,16 @@
+// Test: Break in switch - should PASS
+int main() {
+    int x = 5;
+    switch (x) {
+        case 1:
+            print 1;
+            break;  // Valid: break in switch
+        case 5:
+            print 5;
+            break;  // Valid: break in switch
+        default:
+            print 0;
+            break;  // Valid: break in switch
+    }
+    return 0;
+}

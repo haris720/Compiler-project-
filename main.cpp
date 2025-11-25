@@ -5,6 +5,7 @@
 #include "parser.h"
 #include "scope_analyzer.h"
 #include "type_checker.h"
+#include "ir_generator.h"
 #include "ast_printer_detailed.h"
 
 int main(int argc, char** argv) {
@@ -114,6 +115,16 @@ int main(int argc, char** argv) {
     std::cout << "[OK] Type checking passed successfully" << std::endl;
     std::cout << "     All type constraints satisfied" << std::endl;
     std::cout << "     No type errors detected" << std::endl;
+
+    // ===== PHASE 5: IR GENERATION =====
+    std::cout << "\n=== PHASE 5: IR GENERATION ===" << std::endl;
+    IRGenerator irGenerator;
+    irGenerator.generate(program_root);
+    
+    std::cout << "[OK] IR generation completed successfully" << std::endl;
+    
+    // Print TAC
+    irGenerator.printTAC();
 
     // ===== SUCCESS =====
     std::cout << "\n========================================================" << std::endl;

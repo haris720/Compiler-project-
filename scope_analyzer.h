@@ -13,7 +13,8 @@ enum class ScopeError {
     UndeclaredVariableAccessed,
     UndefinedFunctionCalled,
     VariableRedefinition,
-    FunctionPrototypeRedefinition
+    FunctionPrototypeRedefinition,
+    ErroneousBreakOrContinue
 };
 
 // Convert scope error to string
@@ -27,6 +28,8 @@ inline std::string scopeErrorToString(ScopeError error) {
             return "VariableRedefinition";
         case ScopeError::FunctionPrototypeRedefinition:
             return "FunctionPrototypeRedefinition";
+        case ScopeError::ErroneousBreakOrContinue:
+            return "ErroneousBreakOrContinue";
         default:
             return "UnknownError";
     }
@@ -126,6 +129,12 @@ private:
     // Current scope level
     int scopeLevel;
     
+    // Loop depth tracking (for break/continue validation)
+    int loopDepth;
+    
+    // Switch depth tracking (for break validation - break is valid in switch too)
+    int switchDepth;
+    
     // Helper to enter a new scope
     void enterScope() {
         scopeLevel++;
@@ -159,6 +168,8 @@ private:
     void analyzeWhileStatement(const std::shared_ptr<WhileStatementNode>& whileStmt);
     void analyzeForStatement(const std::shared_ptr<ForStatementNode>& forStmt);
     void analyzeDoWhileStatement(const std::shared_ptr<DoWhileStatementNode>& doWhileStmt);
+    void analyzeBreakStatement(const std::shared_ptr<BreakStatementNode>& breakStmt);
+    void analyzeContinueStatement(const std::shared_ptr<ContinueStatementNode>& continueStmt);
     void analyzeSwitchStatement(const std::shared_ptr<SwitchStatementNode>& switchStmt);
     void analyzeReturnStatement(const std::shared_ptr<ReturnStatementNode>& returnStmt);
     void analyzePrintStatement(const std::shared_ptr<PrintStatementNode>& printStmt);
@@ -169,7 +180,7 @@ private:
     void analyzeTernary(const std::shared_ptr<TernaryNode>& ternary);
     
 public:
-    ScopeAnalyzer() : currentScope(nullptr), scopeLevel(-1) {}
+    ScopeAnalyzer() : currentScope(nullptr), scopeLevel(-1), loopDepth(0), switchDepth(0) {}
     
     // Main analysis entry point
     bool analyze(const std::shared_ptr<ProgramNode>& program);

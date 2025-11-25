@@ -1,0 +1,16 @@
+// Test switch without default case
+int main() {
+    int x = 5;
+    
+    switch (x) {
+        case 1:
+            print 1;
+            break;
+        case 2:
+            print 2;
+            break;
+    }
+    
+    print 999;
+    return 0;
+}

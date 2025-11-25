@@ -1,0 +1,189 @@
+// Comprehensive Type Checker Error Test
+// This file tests all possible type checking errors
+
+// Helper functions
+function int add(int a, int b) {
+    return a + b;
+}
+
+function int subtract(int a, int b) {
+    return a - b;
+}
+
+// ERROR 1: ErroneousVarDecl - Variable declared with wrong type
+function int test_error_1() {
+    int x = 5;
+    int y = 10;
+    int result = x && y;  // Error: int = bool (logical operation returns bool)
+    return result;
+}
+
+// ERROR 2: FnCallParamCount - Wrong number of parameters
+function int test_error_2() {
+    int result = add(5);  // Error: add expects 2 params, got 1
+    return result;
+}
+
+// ERROR 3: FnCallParamType - Wrong parameter type
+function int test_error_3() {
+    bool flag = true;
+    int result = add(flag, flag);  // Error: add expects int, got bool
+    return result;
+}
+
+// ERROR 4: ErroneousReturnType - Return type mismatch
+function int test_error_4() {
+    bool result = true;
+    return result;  // Error: function returns int but returning bool
+}
+
+// ERROR 5: ExpressionTypeMismatch - Ternary operator type mismatch
+function int test_error_5() {
+    bool condition = true;
+    int x = 5;
+    bool y = false;
+    int result = condition ? x : y;  // Error: ternary branches have different types (int vs bool)
+    return result;
+}
+
+// ERROR 6: ExpressionTypeMismatch - Another ternary type mismatch
+function int test_error_6() {
+    int x = 5;
+    int result = (x > 3) ? 10 : true;  // Error: ternary branches (int vs bool)
+    return result;
+}
+
+// ERROR 7: ErroneousBreak - Break outside loop
+function int test_error_7() {
+    int x = 5;
+    if (x > 3) {
+        break;  // Error: break outside loop
+    }
+    return x;
+}
+
+// ERROR 8: ErroneousWhileCondition - Non-boolean condition in while
+function int test_error_8() {
+    int x = 5;
+    while (x) {  // Error: condition must be bool, not int
+        x = x - 1;
+        if (x < 1) {
+            break;
+        }
+    }
+    return x;
+}
+
+// ERROR 9: Unused function to test missing error
+function int test_error_9() {
+    int x = 0;
+    return x;
+}
+
+// ERROR 10: AttemptedLogicalOpOnNonBool - Logical OR on integers
+function int test_error_10() {
+    int x = 5;
+    int y = 10;
+    int result = x || y;  // Error: || requires bool operands
+    return result;
+}
+
+// ERROR 11: AttemptedBitOpOnNonNumeric - Bitwise operation on bool
+function int test_error_11() {
+    bool flag1 = true;
+    bool flag2 = false;
+    int result = flag1 & flag2;  // Error: bitwise & requires int operands
+    return result;
+}
+
+// ERROR 12: AttemptedShiftOnNonInt - Shift operation on float
+function int test_error_12() {
+    float x = 3.14;
+    int result = x << 2;  // Error: shift requires int operands
+    return result;
+}
+
+// ERROR 13: AttemptedAddOpOnNonNumeric - Arithmetic on bool
+function int test_error_13() {
+    bool flag = true;
+    int x = 5;
+    int result = flag + x;  // Error: + requires numeric operands
+    return result;
+}
+
+// ERROR 14: AttemptedMulOpOnNonNumeric - Multiply bool
+function int test_error_14() {
+    bool flag = true;
+    int result = flag * (5 + 10);  // Error: * requires numeric operands
+    return result;
+}
+
+// ERROR 15: ReturnStmtNotFound - Missing return statement
+function int test_error_15() {
+    int x = 5;
+    int y = 10;
+    // Missing return statement
+}
+
+// ERROR 16: ErroneousAssignment - Type mismatch in assignment
+function int test_error_16() {
+    int x = 5;
+    x = true;  // Error: cannot assign bool to int
+    return x;
+}
+
+// ERROR 17: ErroneousIfCondition - Non-boolean if condition
+function int test_error_17() {
+    int x = 5;
+    if (x) {  // Error: condition must be bool
+        return 10;
+    }
+    return 0;
+}
+
+// ERROR 18: AttemptedComparisonOnIncompatible - Comparing different types
+function int test_error_18() {
+    int x = 5;
+    bool flag = true;
+    bool result = (x == flag);  // Error: comparing int with bool
+    return 0;
+}
+
+// ERROR 19: ErroneousUnaryOp - Unary minus on bool
+function int test_error_19() {
+    bool flag = true;
+    int result = -flag;  // Error: unary minus requires numeric type
+    return result;
+}
+
+// ERROR 20: ErroneousLogicalNot - Logical NOT on int
+function int test_error_20() {
+    int x = 5;
+    bool result = !x;  // Error: ! requires bool operand
+    return 0;
+}
+
+// Main function to call all error tests
+function int main() {
+    int r1 = test_error_1();
+    int r2 = test_error_2();
+    int r3 = test_error_3();
+    int r4 = test_error_4();
+    int r5 = test_error_5();
+    int r6 = test_error_6();
+    int r7 = test_error_7();
+    int r8 = test_error_8();
+    int r10 = test_error_10();
+    int r11 = test_error_11();
+    int r12 = test_error_12();
+    int r13 = test_error_13();
+    int r14 = test_error_14();
+    int r15 = test_error_15();
+    int r16 = test_error_16();
+    int r17 = test_error_17();
+    int r18 = test_error_18();
+    int r19 = test_error_19();
+    int r20 = test_error_20();
+    
+    return 0;
+}
